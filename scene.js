@@ -4,17 +4,17 @@ class Scene {
     this.solids = [];
     this.lights = [];
 
-    this.solidIDs = {};
+    this.solidNames = {};
   }
 
   addSolid(solid, name) {
     const index = this.solids.length;
+    this.solidNames[name] = index;
     this.solids.push(solid);
-    this.solidIDs[name] = index;
   }
 
   getSolid(name) {
-    const index = this.solidIDs[name];
+    const index = this.solidNames[name];
     return this.solids[index];
   }
 }

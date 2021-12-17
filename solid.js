@@ -4,4 +4,12 @@ class Solid {
     this.rotation = rotation;
     this.triangles = triangles;
   }
+
+  move(position) {
+    this.position = position;
+  }
+
+  rotate(rotation) {
+    this.rotation = rotation;
+  }
 }

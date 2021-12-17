@@ -1,13 +1,10 @@
 class Vector extends Array {
   constructor(...components) {
     super(...components);
-    // this = components;
-
 
     this.x = components[0];
     this.y = components[1];
     this.z = components[2];
-    this.w = components[3];
   }
 
   // Initialize vector using polar coordinates in n dimensions
@@ -76,11 +73,92 @@ class Vector extends Array {
       .reduce((acc, value) => acc + value);
   }
 
+  // Need to make this general
+  // // Non-standard multiplication of two vectors (returns a vector)
+  // vectorMult(other) {
+  //   return new Vector(
+  //     this.x * other.x,
+  //     this.y * other.y,
+  //     this.z * other.z,
+  //   );
+  // }
+
   cross(other) {
     return new Vector(
       this.y * other.z - this.z * other.y,
       this.z * other.x - this.x * other.z,
       this.x * other.y - this.y * other.x
+    );
+  }
+
+  rotateX(angle) {
+    const sin = Math.sin(angle);
+    const cos = Math.cos(angle);
+
+    return new Vector(
+      this.x,
+      this.y * cos - this.z * sin,
+      this.y * sin + this.z * cos,
+    );
+  }
+
+  rotateY(angle) {
+    const sin = Math.sin(angle);
+    const cos = Math.cos(angle);
+
+    return new Vector(
+      this.x * cos + this.z * sin,
+      this.y,
+      this.z * cos - this.x * sin,
+    );
+  }
+
+  rotateZ(angle) {
+    const sin = Math.sin(angle);
+    const cos = Math.cos(angle);
+
+    return new Vector(
+      this.x * cos - this.y * sin,
+      this.x * sin + this.y * cos,
+      this.z,
+    );
+  }
+
+  rotate(angle) {
+    return this
+      .rotateX(angle.x)
+      .rotateY(angle.y)
+      .rotateZ(angle.z);
+  }
+
+  rotateAround(pivot, angle) {
+    return this
+      .sub(pivot)
+      .rotate(angle)
+      .add(pivot);
+  }
+
+  project() {
+    return new Vector(
+      this.x / this.z,
+      this.y / this.z,
+      0,
+    );
+  }
+
+  abs() {
+    return new Vector(
+      Math.abs(this.x),
+      Math.abs(this.y),
+      Math.abs(this.z),
+    );
+  }
+
+  projectZ() {
+    return new Vector(
+      this.x / this.z,
+      this.y / this.z,
+      0,
     );
   }
 }
