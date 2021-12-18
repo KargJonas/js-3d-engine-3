@@ -1,5 +1,5 @@
 class DirectionalLight {
-  constructor(rotation) {
-    this.rotation = rotation;
+  constructor(direction) {
+    this.direction = direction;
   }
 }

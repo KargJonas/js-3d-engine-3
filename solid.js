@@ -12,4 +12,20 @@ class Solid {
   rotate(rotation) {
     this.rotation = rotation;
   }
+
+  computeAdjusted() {
+    const adjustedTriangles = this.triangles.map(({ normal, vertices }) => {
+      const adjustedVertices = vertices
+        .map(vertex => vertex.add(this.position))
+        .map(vertex => vertex.rotateAround(this.position, this.rotation))
+
+      return t(normal, ...adjustedVertices);
+    });
+
+    return new Solid(
+      this.position,
+      this.rotation,
+      adjustedTriangles
+    );
+  }
 }

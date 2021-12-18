@@ -17,4 +17,8 @@ class Scene {
     const index = this.solidNames[name];
     return this.solids[index];
   }
+
+  addLight(light) {
+    this.lights.push(light);
+  }
 }

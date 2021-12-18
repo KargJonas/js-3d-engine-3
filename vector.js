@@ -41,7 +41,7 @@ class Vector extends Array {
   mag() {
     return Math.sqrt(
       this
-        .map(component => Math.sqrt(component, 2))
+        .map(component => Math.pow(component, 2))
         .reduce((acc, value) => acc + value));
   }
 
@@ -165,4 +165,8 @@ class Vector extends Array {
 
 function v(...components) {
   return new Vector(...components);
+}
+
+function v3(x = 0, y = 0, z = 0) {
+  return new Vector(x, y, z);
 }

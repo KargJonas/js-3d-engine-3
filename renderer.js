@@ -27,14 +27,25 @@ class Renderer {
     const ctx = this.ctx.context;
     ctx.clearRect(-1, -1, 2, 2);
 
-    for (const solid of solids) {
+    const adjustedSolids = solids.map(solid => solid.computeAdjusted());
+
+    for (const solid of adjustedSolids) {
+      for (const triangle of solid.triangles) {
+        const depth = triangle.getDistanceFromCamera(camera);
+        triangle.depth = depth;
+      }
+
+      solid.triangles = solid.triangles.sort((a, b) => b.depth - a.depth);
+    }
+
+    for (const solid of adjustedSolids) {
       for (const triangle of solid.triangles) {
         const vertices = triangle.vertices
-          .map(vertex => vertex.add(solid.position))
-          .map(vertex => vertex.rotateAround(solid.position, solid.rotation))
           .map(vertex => vertex.projectZ());
 
         const firstVertex = vertices[0];
+        const brightness = triangle.normal.dot(lights[0].direction) * 255;
+        // const dist = t(...vertices).getDistanceFromCamera(camera);
 
         ctx.beginPath();
         ctx.moveTo(firstVertex.x, firstVertex.y);
@@ -43,7 +54,11 @@ class Renderer {
           ctx.lineTo(vertex.x, vertex.y);
         }
 
-        ctx.stroke();
+        ctx.closePath();
+        ctx.fillStyle = `rgb(${brightness},${brightness},${brightness})`;
+        ctx.fill();
+
+        // ctx.stroke();
       }
     }
   }

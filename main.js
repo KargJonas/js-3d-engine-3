@@ -2,6 +2,7 @@ const cnv = document.querySelector('canvas');
 const ctx = new RenderingContext(cnv, 400, 400);
 
 const cam1 = new Camera(v(0, 0, -2), v(0, 0, 0));
+const light1 = new DirectionalLight(v(-1, 0, 0));
 const scene1 = new Scene(cam1);
 const renderer = new Renderer(ctx);
 
@@ -20,8 +21,9 @@ async function init() {
     await readFile(MODEL)
   );
 
-  solid1.move(v(0, 0, 4));
+  solid1.move(v(0, 0, 2));
   scene1.addSolid(solid1, 'my-cube');
+  scene1.addLight(light1);
   // scene1.camera.aimTowards(solid1.position);
   // renderer.render(scene1);
 
@@ -34,6 +36,7 @@ function draw() {
 
   const t = timer1.seconds() / 2;
   solid1.rotate(v(t, t, 0));
+  // solid1.rotate(v(2.4, 0, 1));
   renderer.render(scene1);
 }
 
