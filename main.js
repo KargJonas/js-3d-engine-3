@@ -12,7 +12,7 @@ const timer1 = new Timer();
 const MODEL = 'assets/torus.stl';
 // const MODEL = 'assets/monkey.stl';
 
-let solid1;
+let solid1, solid2;
 
 async function init() {
   solid1 = new Solid(
@@ -21,11 +21,19 @@ async function init() {
     await readFile(MODEL)
   );
 
+  solid2 = new Solid(
+    v(0, 0, 0),
+    v(0, 0, 0),
+    await readFile('assets/monkey.stl')
+  );
+
   solid1.move(v(0, 0, 2));
-  scene1.addSolid(solid1, 'my-cube');
+  solid2.move(v(0, 0, 8));
+
+  scene1.addSolid(solid1, 'my-torus');
+  scene1.addSolid(solid2, 'my-cube');
   scene1.addLight(light1);
   // scene1.camera.aimTowards(solid1.position);
-  // renderer.render(scene1);
 
   timer1.start();
   draw();
@@ -36,7 +44,7 @@ function draw() {
 
   const t = timer1.seconds() / 2;
   solid1.rotate(v(t, t, 0));
-  // solid1.rotate(v(2.4, 0, 1));
+  solid2.rotate(v(-t, -t, 0));
   renderer.render(scene1);
 }
 
