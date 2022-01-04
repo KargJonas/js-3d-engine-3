@@ -44,8 +44,8 @@ class Renderer {
           .map(vertex => vertex.projectZ());
 
         const firstVertex = vertices[0];
-        const brightness = triangle.normal.dot(lights[0].direction) * 255;
         // const dist = t(...vertices).getDistanceFromCamera(camera);
+        const brightness = triangle.normal.dot(lights[0].direction) * 255;
 
         ctx.beginPath();
         ctx.moveTo(firstVertex.x, firstVertex.y);

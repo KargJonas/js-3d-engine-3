@@ -19,7 +19,9 @@ class Solid {
         .map(vertex => vertex.add(this.position))
         .map(vertex => vertex.rotateAround(this.position, this.rotation))
 
-      return t(normal, ...adjustedVertices);
+      const adjustedNormal = normal.rotate(this.rotation);
+
+      return t(adjustedNormal, ...adjustedVertices);
     });
 
     return new Solid(

@@ -1,3 +1,17 @@
+# JS 3D Engine v3
+### This is my third (and best) attempt at creating a 3d engine from scratch.
+
+This is just a demo.
+
+This engine can load and render STL files and render them using the 2D canvas API. (The files have to be exported using the ASCII format)
+So far, directional lighting, occlusion as well as translation and rotation of objects are working.
+The performance is pretty bad as I have not implemented culling or any other performance improvement.
+
+![A torus rendered using directional light](demo.png)
+
+## A simple scene
+
+```javascript
 const cnv = document.querySelector('canvas');
 const ctx = new RenderingContext(cnv, 400, 400);
 
@@ -7,12 +21,9 @@ const scene1 = new Scene(cam1);
 const renderer = new Renderer(ctx);
 
 const timer1 = new Timer();
-
-// const MODEL = 'assets/cube.stl';
 const MODEL = 'assets/torus.stl';
-// const MODEL = 'assets/monkey.stl';
 
-let solid1, solid2;
+let solid1;
 
 async function init() {
   solid1 = new Solid(
@@ -21,21 +32,12 @@ async function init() {
     await readFile(MODEL)
   );
 
-  solid2 = new Solid(
-    v(0, 0, 0),
-    v(0, 0, 0),
-    await readFile('assets/monkey.stl')
-  );
-
   solid1.move(v(0, 0, 2));
-  solid2.move(v(0, 0, 8));
-
   scene1.addSolid(solid1, 'my-torus');
-  // scene1.addSolid(solid2, 'my-cube');
   scene1.addLight(light1);
-  // scene1.camera.aimTowards(solid1.position);
 
   timer1.start();
+
   draw();
 }
 
@@ -44,8 +46,9 @@ function draw() {
 
   const t = timer1.seconds() / 2;
   solid1.rotate(v(t, t, 0));
-  // solid2.rotate(v(-t, -t, 0));
+  
   renderer.render(scene1);
 }
 
 init();
+```
