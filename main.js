@@ -9,8 +9,10 @@ const renderer = new Renderer(ctx);
 const timer1 = new Timer();
 
 // const MODEL = 'assets/cube.stl';
-const MODEL = 'assets/torus.stl';
+// const MODEL = 'assets/torus.stl';
+// const MODEL = 'assets/torus-hifi.stl';
 // const MODEL = 'assets/monkey.stl';
+const MODEL = 'assets/monkey-hifi.stl';
 
 let solid1, solid2;
 
@@ -42,8 +44,10 @@ async function init() {
 function draw() {
   requestAnimationFrame(draw);
 
-  const t = timer1.seconds() / 2;
-  solid1.rotate(v(t, t, 0));
+  // const t = timer1.seconds() / 2;
+  // const t = 1<;
+  // solid1.rotate(v(t, t, 0));
+  solid1.rotate(v(0, 0.5, 0));
   // solid2.rotate(v(-t, -t, 0));
   renderer.render(scene1);
 }

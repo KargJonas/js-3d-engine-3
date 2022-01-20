@@ -45,7 +45,13 @@ class Renderer {
 
         const firstVertex = vertices[0];
         // const dist = t(...vertices).getDistanceFromCamera(camera);
-        const brightness = triangle.normal.dot(lights[0].direction) * 255;
+
+        const specular = Math.pow(lights[0].direction.add(triangle.normal).unit().dot(camera.direction), 2) * 0.8;
+
+        // const specular = 0;
+        // let brightness = specular;
+        const light = triangle.normal.dot(lights[0].direction);
+        let brightness = (light + specular) * 255;
 
         ctx.beginPath();
         ctx.moveTo(firstVertex.x, firstVertex.y);
@@ -54,7 +60,8 @@ class Renderer {
           ctx.lineTo(vertex.x, vertex.y);
         }
 
-        ctx.closePath();
+        // ctx.closePath();
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0)';
         ctx.fillStyle = `rgb(${brightness},${brightness},${brightness})`;
         ctx.fill();
 
